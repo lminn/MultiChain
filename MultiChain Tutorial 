@@ -1,0 +1,98 @@
+************************
+*                      *
+* Block Chain Tutorial * 
+*                      *
+************************
+
+
+// Connect to both droplets
+
+1. ssh root@{droplet1}
+
+2. ssh root@{droplet2}
+
+***** Droplet 1 ******
+
+// Download multichain. Create a new chain and connect to it.
+
+3. wget https://www.multichain.com/download/multichain-1.0.5.tar.gz   
+
+4. tar -xvzf multichain-1.0.5.tar.gz  
+
+5. cd multichain-1.0.5
+
+6. mv multichaind multichain-cli multichain-util /usr/local/bin/  
+
+7. multichain-util create chain1 
+
+8. multichaind chain1 -daemon
+
+
+***** Droplet 2 ******   
+
+// Download multichain and connect to the chain from droplet1
+
+9. wget https://www.multichain.com/download/multichain-1.0.5.tar.gz   
+
+10. tar -xvzf multichain-1.0.5.tar.gz  
+
+11. cd multichain-1.0.5
+
+12. mv multichaind multichain-cli multichain-util /usr/local/bin/  
+
+13. multichaind chain1@{droplet1}
+
+
+***** Droplet 1 ******
+
+// Grant droplet2 permissions to access chain1
+
+14. multichain-cli chain1 grant {address} connect,send,receive
+
+
+***** Droplet 2 ******
+
+// Connect to chain1
+
+-----15. multichaind chain1@{droplet1} ?? -------
+
+15.  multichaind chain1 -daemon
+
+
+***** Droplet 1 ******
+
+// Get the address of the current wallet and issue a currency 
+
+16. multichain-cli chain1
+
+17. getaddresses 
+
+18. issue {wallet-address} TestCoin 1000 0.01
+
+19. gettotalbalances
+
+// Send coins to droplet2 
+
+20. getpeerinfo 
+
+21. sendasset {handshake} TestCoin 8 
+
+***** Droplet 2 ******
+
+// Verify the transaction 
+
+23. mutlichain-cli chain1 
+
+24. gettotal balances // or listwallettransactions
+
+
+***** Droplet 1 ******
+
+// Grant mining permission to droplet2
+
+25. grant 1VXdb9k9NYNgPsczpGQwKEWRrLeA3vvjZhrmqV mine
+
+
+
+
+
